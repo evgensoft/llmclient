@@ -78,11 +78,11 @@ func (c *Client) Chat(ctx context.Context, req ChatRequest) (ChatResponse, error
 // SimpleRequest выполняет простой запрос с системным и пользовательским промптом
 func (c *Client) SimpleRequest(ctx context.Context, systemPrompt, userPrompt string) (string, error) {
 	messages := make([]Message, 0, 2)
-	
+
 	if systemPrompt != "" {
 		messages = append(messages, Message{Role: "system", Content: systemPrompt})
 	}
-	
+
 	messages = append(messages, Message{Role: "user", Content: userPrompt})
 
 	req := ChatRequest{
@@ -141,7 +141,7 @@ func (c *Client) doRequest(ctx context.Context, req ChatRequest) (*http.Response
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v1/chat/completions", bytes.NewReader(jsonData))
+	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/chat/completions", bytes.NewReader(jsonData))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
