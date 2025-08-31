@@ -126,7 +126,9 @@ func (c *Client) RequestWithSchema(ctx context.Context, systemPrompt, userPrompt
 		return fmt.Errorf("no choices in response")
 	}
 
-	err = json.Unmarshal([]byte(resp.Choices[0].Message.Content), schema)
+	cleanContent := cleanJSONResponse(resp.Choices[0].Message.Content)
+
+	err = json.Unmarshal([]byte(cleanContent), schema)
 	if err != nil {
 		return err
 	}

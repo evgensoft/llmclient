@@ -156,3 +156,13 @@ func parseSchemaTag(tag, key string) string {
 	}
 	return ""
 }
+
+// CleanJSONResponse - очистка лишних символов перед парсингом JSON
+func cleanJSONResponse(content string) string {
+	// Remove markdown code block markers
+	content = strings.TrimSpace(content)
+	content = strings.TrimPrefix(content, "```json")
+	content = strings.TrimSuffix(content, "```")
+
+	return strings.TrimSpace(content)
+}
